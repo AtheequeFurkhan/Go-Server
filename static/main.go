@@ -18,15 +18,15 @@ func helloHandler(w http.ResponseWriter,r *http.Request){
 }
 
 func formHandler(w http.ResponseWriter,r *http.Request){
-	if r.URL.Path != "/form"{
-		http.Error(w, "404 not found", http.StatusNotFound)
-		return
+	if error := r.ParseForm(); error != nil{
+		fmt.Fprintf(w, "ParseForm() err: %v", error)
 	}
-	if r.Method != "GET"{
-		http.Error(w, "method is not supported", http.StatusNotFound)
-		return
-	}
-	fmt.Fprintf(w, "Form!")
+	fmt.Fprintf(w, "POST request Successful")
+	name := r.FormValue("name")
+	email := r.FormValue("email")
+	
+	fmt.Fprintf(w, "Name = %s\n", name)
+	fmt.Fprintf(w, "Email = %s\n", email)
 
 }
 
